@@ -1,0 +1,16 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "dev.rylune.fabric.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "client": [
+    "FrameMixin",
+    "ParticleMixin",
+    "StateHashMixin",
+    "ResourceMemoryMixin",
+    "ZoomMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
