@@ -4,4 +4,4 @@ python tools\prepare_game.py
 if errorlevel 1 exit /b 1
 call gradle --no-daemon clean build
 if errorlevel 1 exit /b 1
-echo JAR: build\libs\RyluneFabric-1.8.9-0.2.0-alpha.jar
+echo JAR: build\libs\RyluneFabric-1.8.9-0.3.0-alpha.jar

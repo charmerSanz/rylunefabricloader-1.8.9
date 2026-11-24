@@ -18,13 +18,13 @@ public final class Config {
     public static void save(Path file,Properties edits)throws IOException{
         Properties p=new Properties();if(Files.exists(file))try(InputStream in=Files.newInputStream(file)){p.load(in);}p.putAll(edits);
         Path absolute=file.toAbsolutePath();Files.createDirectories(absolute.getParent());Path tmp=Files.createTempFile(absolute.getParent(),"rylune-",".tmp");
-        try{try(OutputStream out=Files.newOutputStream(tmp)){p.store(out,"Rylune Fabric 0.2.0-alpha");}try{Files.move(tmp,absolute,StandardCopyOption.REPLACE_EXISTING,StandardCopyOption.ATOMIC_MOVE);}catch(AtomicMoveNotSupportedException e){Files.move(tmp,absolute,StandardCopyOption.REPLACE_EXISTING);}}finally{Files.deleteIfExists(tmp);}
+        try{try(OutputStream out=Files.newOutputStream(tmp)){p.store(out,"Rylune Fabric 0.3.0-alpha");}try{Files.move(tmp,absolute,StandardCopyOption.REPLACE_EXISTING,StandardCopyOption.ATOMIC_MOVE);}catch(AtomicMoveNotSupportedException e){Files.move(tmp,absolute,StandardCopyOption.REPLACE_EXISTING);}}finally{Files.deleteIfExists(tmp);}
     }
     public static Config defaults(){return new Config(new Properties());}
     public static Config load(Path file) throws IOException {
         if(!Files.exists(file)){
             if(file.getParent()!=null)Files.createDirectories(file.getParent());
-            String text="# Rylune Fabric 0.2.0-alpha. Reloaded periodically while game runs.\n# 0 disables an individual FPS cap or particle budget.\nenabled=true\nbackgroundFps=30\nhiddenFps=15\n# Experimental: limits new particles per second. May hide visual cues.\nparticleBudget=0\n# Writes aggregate frame statistics every 10 seconds, only while focused.\nbenchmark=false\nstateCache=false\nstringPool=false\nzoom=false\n";
+            String text="# Rylune Fabric 0.3.0-alpha. Reloaded periodically while game runs.\n# 0 disables an individual FPS cap or particle budget.\nenabled=true\nbackgroundFps=30\nhiddenFps=15\n# Experimental: limits new particles per second. May hide visual cues.\nparticleBudget=0\n# Writes aggregate frame statistics every 10 seconds, only while focused.\nbenchmark=false\nstateCache=false\nstringPool=false\nzoom=false\n";
             Files.write(file,text.getBytes(java.nio.charset.StandardCharsets.UTF_8),StandardOpenOption.CREATE_NEW);
         }
         Properties p=new Properties();try(InputStream in=Files.newInputStream(file)){p.load(in);}return new Config(p);

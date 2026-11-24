@@ -5,7 +5,7 @@ with zipfile.ZipFile(sys.argv[1]) as z:
     assert 'dev/rylune/fabric/RyluneClient.class' in names
     assert 'dev/rylune/fabric/gui/RyluneScreen.class' in names
     assert 'dev/rylune/fabric/StringPool.class' in names
-    assert meta['version']=='0.2.0-alpha'
+    assert meta['version']=='0.3.0-alpha'
     for n in names:
         if n.endswith('.class'):
             assert n.startswith('dev/rylune/fabric/'), n

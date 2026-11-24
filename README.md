@@ -1,6 +1,10 @@
-# Rylune Fabric 1.8.9 — 0.2.0-alpha
+# Rylune Fabric 1.8.9 — 0.3.0-alpha
 
 Client-side optimization suite for native Minecraft 1.8.9, upstream Fabric Loader and Legacy Fabric **generation 1**. Java 8 baseline. Not a new loader fork; not universal modern Fabric compatibility.
+
+## Modern mod compatibility (new in 0.3)
+
+Use `python tools/modern_bridge.py inspect <mod.jar>` to check a newer Fabric JAR. Portable pure-Java mods may be staged for 1.8.9; game-dependent modern mods still need a proper backport. The bridge can also enable Rylune's native feature substitutes from the inspected mod ID. See [Modern Fabric compatibility guide](docs/MODERN_COMPATIBILITY.md) for conversion commands, supported subset, limitations and testing.
 
 ## What's new
 - **Rylune Settings:** dedicated black-and-white in-game screen, Right Shift during gameplay, left-click to cycle settings, Save & close or Escape to discard. Config changes persist. Does not patch HUD, inventory or chat drawing. If Right Shift conflicts with another mod, add `-Drylune.noMenu=true` to the game's JVM arguments.
@@ -13,7 +17,7 @@ Client-side optimization suite for native Minecraft 1.8.9, upstream Fabric Loade
 ## Install
 1. Start Minecraft 1.8.9 once via official launcher. Install Legacy Fabric at https://legacyfabric.net/ with loader 0.16.14 or compatible Java-8 version, **intermediary generation 1**.
 2. Create a separate game directory, e.g. `%APPDATA%\.minecraft\rylune-1.8.9`. Set Java 8 as baseline; on 8 GB physical RAM start with about 2 GB heap (`-Xmx2G`).
-3. Put the GitHub-built `RyluneFabric-1.8.9-0.2.0-alpha.jar` in the isolated `mods` folder. Remove the earlier Rylune JAR. Do not install source JARs or modern mods directly.
+3. Put the GitHub-built `RyluneFabric-1.8.9-0.3.0-alpha.jar` in the isolated `mods` folder. Remove the earlier Rylune JAR. Do not install source JARs or modern mods directly.
 4. Launch, join a test world, press Right Shift. Test the base configuration first. Leave experimental settings OFF until baseline is stable. Escape cancels edits. Use matching Legacy Fabric API only when needed by other mods.
 5. Enable one experimental feature at a time and benchmark. If the game fails to start, remove the Rylune JAR and save latest.log. `enabled=false` stops optional behavior but cannot undo class transformation or existing deduplicated strings. Do not assume compatibility with Lunar, Badlion, OneClient or competitive server rules.
 
@@ -41,10 +45,10 @@ The bridge writes only Rylune configuration, backing up the previous file. Do no
 ## Build (real dependencies)
 Install JDK 17, Python 3.8+, Gradle 8.12.1. Run `python tools/prepare_game.py`, then `gradle --no-daemon clean build` (or `build.bat` on Windows). The preparatory script obtains Mojang's official 1.8.9 client and libraries, verifies Mojang checksums, and remaps it using Legacy Fabric generation-1 mappings and Tiny Remapper. The Gradle compile uses the actual game classes; the remapped game and libraries remain in ignored `.gradle/rylune-game/` and are never included in the mod/source ZIP. Do not commit the Minecraft JARs. Build depends on network access.
 
-GitHub: the workflow automatically builds on pushes to main and publishes the prerelease `v0.2.0-alpha` only if the build and tests succeed. To rerun manually, use **Actions > Build and release Rylune Fabric > Run workflow** and leave publish enabled on main. Output `build/libs/RyluneFabric-1.8.9-0.2.0-alpha.jar` (not `-sources.jar`).
+GitHub: the workflow automatically builds on pushes to main and publishes the prerelease `v0.3.0-alpha` only if the build and tests succeed. To rerun manually, use **Actions > Build and release Rylune Fabric > Run workflow** and leave publish enabled on main. Output `build/libs/RyluneFabric-1.8.9-0.3.0-alpha.jar` (not `-sources.jar`).
 
 ## Verification status
-Pure Java core tests and five Python tests passed locally. All Java source syntax was checked against temporary minimal API signatures (not actual Minecraft runtime; stubs are not shipped). The real Gradle build, renderer download/install, and game launch have not been run locally because network/dependencies are unavailable. Check GitHub Actions for the dependency-based build result. No guaranteed FPS or RAM improvement.
+The previous pure Java and Python tests passed; new compatibility tests are configured for CI. All Java source syntax was checked against temporary minimal API signatures (not actual Minecraft runtime; stubs are not shipped). The real Gradle build, renderer download/install, and game launch have not been run locally because network/dependencies are unavailable. Check GitHub Actions for the dependency-based build result. No guaranteed FPS or RAM improvement.
 
 ## Credits / licensing
 Rylune original code: MIT. Legacy Fabric intermediary mapping names: https://github.com/Legacy-Fabric/Legacy-Intermediaries . Tiny Remapper: https://github.com/FabricMC/tiny-remapper . Radium is an independent upstream project under its own license; it is downloaded directly from Modrinth only when requested. Lithium and FerriteCore are inspiration, not bundled code or endorsements. Minecraft is not redistributed. See docs/TESTING.md and docs/ROADMAP.md.

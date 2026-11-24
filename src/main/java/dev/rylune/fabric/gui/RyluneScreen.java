@@ -16,7 +16,7 @@ public final class RyluneScreen extends class_388 {
     private void center(String s,int y,int c){text(s,(field_1230-field_1234.method_954(s))/2,y,c);}
     @Override public void method_1025(int mx,int my,float partial){
         int l=left(),r=right(),t=top(),h=step();method_988(0,0,field_1230,field_1231,0xE8101010);
-        center("RYLUNE FABRIC  /  0.2 ALPHA",t+2,0xFFFFFF);center(RyluneClient.renderer(),t+14,0xAAAAAA);
+        center("RYLUNE FABRIC  /  0.3 ALPHA",t+2,0xFFFFFF);center(RyluneClient.renderer(),t+14,0xAAAAAA);
         for(int i=0;i<KEYS.length;i++){int y=t+27+i*h;boolean hover=mx>=l&&mx<r&&my>=y&&my<y+h-1;
             method_988(l,y,r,y+h-1,hover?0xFF383838:0xFF242424);text(LABELS[i],l+5,y+Math.max(0,(h-8)/2),0xEEEEEE);
             String value=draft.getProperty(KEYS[i]);if("true".equals(value))value="ON";else if("false".equals(value))value="OFF";else if("0".equals(value))value="OFF";
