@@ -1,9 +1,10 @@
 plugins { id 'java' }
 group = 'dev.rylune'
-version = '0.3.0-alpha'
+version = '0.4.0-alpha'
+base.archivesName = 'RyluneFabric-1.8.9-OneClient'
 repositories { maven { url = 'https://maven.fabricmc.net/' }; mavenCentral() }
 dependencies {
-    compileOnly files('.gradle/rylune-game/client-intermediary.jar')
+    compileOnly files('.gradle/rylune-game/client-ornithe-gen2.jar')
     compileOnly fileTree(dir: '.gradle/rylune-game/libs', include: '**/*.jar')
     compileOnly 'net.fabricmc:fabric-loader:0.16.14'
     compileOnly 'net.fabricmc:sponge-mixin:0.15.5+mixin.0.8.7'

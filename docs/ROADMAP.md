@@ -6,3 +6,5 @@
 - Future: full modern JAR adaptation is not promised; substantial game differences require per-mod ports. Full renderer fork, full Lithium/FerriteCore backports not implemented.
 
 - v0.3 alpha bridge milestone: portable JAR preflight/conversion and native feature routing implemented; runtime validation remains open.
+
+- v0.4 alpha: OneClient / Ornithe Calamus Gen 2 mapping port and signature validation; Java 25 preflight. Native runtime testing remains required.

@@ -83,7 +83,7 @@ def setup(instance,jar,preset):
     if any(scan(p).get('id')=='rylunefabric' for p in mods.glob('*.jar')): raise ValueError('Another Rylune JAR already installed.')
     shutil.copy2(jar,dest)
     if preset: apply_preset(instance,preset)
-    print(f'Installed mod in {mods}. Set this as the game directory of a Legacy Fabric 1.8.9 gen-1 launcher profile.')
+    print(f'Installed mod in {mods}. Set this as the game directory of a Ornithe Gen 2 1.8.9 launcher profile.')
 
 def apply_preset(instance,preset):
     instance.mkdir(parents=True,exist_ok=True); p=instance/'options.txt'; values=PRESETS[preset].copy()

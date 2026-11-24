@@ -50,23 +50,12 @@ def renderer(instance, java, install=False):
     result=scan(p,java=java);print(json.dumps(result,indent=2));print('Upstream dependencies:',json.dumps(meta.get('dependencies',[])))
     print('Staged (not active):',p)
     if not install:return
-    if result['status']!='CANDIDATE':raise ValueError('Renderer metadata/bytecode not compatible with selected runtime')
-    if result.get('id') not in ('sodium','radium'):raise ValueError('Unexpected renderer mod ID')
-    if any(d.get('dependency_type')=='required' for d in meta.get('dependencies',[])):raise ValueError('Required upstream dependencies must be reviewed and installed manually; renderer remains staged.')
-    mods=instance/'mods';mods.mkdir(exist_ok=True)
-    conflicting={'sodium','radium','optifabric','optifine','iris','legacy-lwjgl3','legacy_lwjgl3','vulkanmod','sulfide','oldium','saltlib'}
-    existing=[scan(x,java=java) for x in mods.glob('*.jar')]
-    if any(x.get('id') in conflicting or any(t in x['file'].lower() for t in ('optifine','optifabric','radium','sodium','lwjgl3')) for x in existing):raise ValueError('Existing renderer or graphics bridge detected; use an isolated clean profile.')
-    ids={x.get('id') for x in existing}|{'minecraft','java','fabricloader',result.get('id')}
-    if set(result.get('dependencies',{}))-ids:raise ValueError('Unresolved dependency IDs; install and test upstream requirements manually.')
-    dest=mods/name
-    if dest.exists():raise ValueError('Renderer already installed')
-    shutil.copy2(p,dest);print('Installed experimental external renderer:',dest);print('Mapping generation, Java declaration, GPU support and real runtime compatibility still need validation. Remove this JAR if launch fails.')
+    raise ValueError('Automatic renderer installation disabled on Ornithe Gen 2: the pinned Radium build has not been verified for these mappings. Obtain a compatible Ornithe renderer manually.')
 
 def main():
     p=argparse.ArgumentParser(description=__doc__);sub=p.add_subparsers(dest='cmd',required=True)
     a=sub.add_parser('adapt');a.add_argument('instance',type=Path);a.add_argument('mod',choices=ADAPTERS)
-    a=sub.add_parser('renderer');a.add_argument('instance',type=Path);a.add_argument('--java',type=int,default=8,choices=range(8,26));a.add_argument('--install',action='store_true',help='Actually copy into mods after preflight; experimental')
+    a=sub.add_parser('renderer');a.add_argument('instance',type=Path);a.add_argument('--java',type=int,default=25,choices=range(8,26));a.add_argument('--install',action='store_true',help='Actually copy into mods after preflight; experimental')
     args=p.parse_args()
     if args.cmd=='adapt':
         changes,desc=ADAPTERS[args.mod];print(desc);print('Updated',write_options(args.instance,changes));print('Do not place original modern JAR in mods.')

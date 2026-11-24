@@ -25,9 +25,10 @@ jobs:
         with:
           gradle-version: '8.12.1'
       - run: python3 tools/prepare_game.py
+      - run: python3 tools/verify_targets.py
       - run: gradle --no-daemon clean build
       - run: python3 -m unittest discover -s tools -p 'test_*.py'
-      - run: python3 tools/verify_jar.py build/libs/RyluneFabric-1.8.9-0.3.0-alpha.jar
+      - run: python3 tools/verify_jar.py build/libs/RyluneFabric-1.8.9-OneClient-0.4.0-alpha.jar
       - run: |
           mkdir -p release
           cp build/libs/*.jar release/
@@ -57,13 +58,13 @@ jobs:
           REF_TYPE: ${{ github.ref_type }}
           COMMIT: ${{ github.sha }}
         run: |
-          tag=v0.3.0-alpha
+          tag=v0.4.0-alpha
           if [ "$REF_TYPE" = tag ]; then
             tag="$REF_NAME"
-            test "$tag" = v0.3.0-alpha
+            test "$tag" = v0.4.0-alpha
           fi
           if gh release view "$tag" >/dev/null 2>&1; then
             gh release upload "$tag" release/* --clobber
           else
-            gh release create "$tag" release/* --target "$COMMIT" --title "Rylune Fabric $tag" --notes 'Experimental 1.8.9 generation-1 Legacy Fabric mod with portable JAR preflight/conversion and native feature routing. Not universal compatibility; in-game compatibility is not established.' --prerelease
+            gh release create "$tag" release/* --target "$COMMIT" --title "Rylune Fabric $tag" --notes 'OneClient / Ornithe Gen 2 mapping fix for 1.8.9; F8 settings, Java 25 compatibility preflight. Not universal modern mod compatibility. Runtime testing is still required.' --prerelease
           fi

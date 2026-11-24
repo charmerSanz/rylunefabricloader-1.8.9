@@ -84,7 +84,7 @@ def read_pool(data):
         refs.update(re.findall(r'L([A-Za-z0-9_$/]+)(?=[;<])', s))
     return major, name, strings, refs
 
-def assess(path, java=8, loader='0.16.14'):
+def assess(path, java=25, loader='0.16.14'):
     result = {'file': path.name, 'status': 'REJECTED', 'reasons': [],
               'java': java, 'loader': loader, 'target': '1.8.9'}
     reasons = result['reasons']
@@ -194,6 +194,9 @@ def assess(path, java=8, loader='0.16.14'):
             if len(blocked)>30: reasons.append('Additional unsupported references omitted')
         if mc is True and not reasons:
             result['status'] = 'NATIVE_CANDIDATE'
+        elif mc is True:
+            result['status'] = 'NATIVE_REVIEW'
+            reasons.append('Declared 1.8.9 support is not proof of Ornithe Gen 2 support; obtain an explicitly compatible release. Do not convert this JAR.')
         elif not reasons and mc is False and requested:
             result['status'] = 'PORTABLE_CANDIDATE'
         elif not reasons:
@@ -202,7 +205,7 @@ def assess(path, java=8, loader='0.16.14'):
         reasons.append(str(exc))
     return result, metadata, entries
 
-def convert(source, destination, java=8, loader='0.16.14', *, permission=False):
+def convert(source, destination, java=25, loader='0.16.14', *, permission=False):
     if not permission:
         raise ValueError('Confirm that you have permission to adapt the JAR')
     if destination.suffix.lower() != '.jar' or source.resolve() == destination.resolve():
@@ -244,7 +247,7 @@ def main():
     for cmd in ('inspect','convert','native'):
         s=sub.add_parser(cmd)
         s.add_argument('jar',type=Path)
-        s.add_argument('--java',type=int,choices=(8,17,21),default=8)
+        s.add_argument('--java',type=int,choices=(8,17,21,25),default=25)
         s.add_argument('--loader',default='0.16.14')
         if cmd=='convert':
             s.add_argument('output',type=Path)

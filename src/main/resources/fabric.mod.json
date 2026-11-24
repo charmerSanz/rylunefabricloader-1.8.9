@@ -1,1 +1,25 @@
-{"schemaVersion":1,"id":"rylunefabric","version":"0.3.0-alpha","name":"Rylune Fabric","description":"Client-side optimization suite and native feature adapters for Legacy Fabric 1.8.9 generation 1.","environment":"client","entrypoints":{"client":["dev.rylune.fabric.RyluneClient"]},"mixins":["rylune.mixins.json"],"depends":{"fabricloader":">=0.16.14","minecraft":"1.8.9","java":">=8"},"license":"MIT"}
+{
+  "schemaVersion": 1,
+  "id": "rylunefabric",
+  "version": "0.4.0-alpha",
+  "name": "Rylune Fabric",
+  "description": "Experimental client optimization and compatibility tools for OneClient / Ornithe Calamus Gen 2 Minecraft 1.8.9.",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "dev.rylune.fabric.RyluneClient"
+    ]
+  },
+  "mixins": [
+    "rylune.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.16.14",
+    "minecraft": "1.8.9",
+    "java": ">=8"
+  },
+  "license": "MIT",
+  "custom": {
+    "rylune:mappings": "ornithe-gen2"
+  }
+}

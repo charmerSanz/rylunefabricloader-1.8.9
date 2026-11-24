@@ -10,6 +10,8 @@ public final class RyluneClient implements ClientModInitializer {
     private static final Logger LOG=Logger.getLogger("RyluneFabric");
     private static volatile Config config=Config.defaults();
     private static volatile boolean ready=false;
+    private static boolean frameHookSeen;
+    public static void markFrameHook(){if(!frameHookSeen){frameHookSeen=true;LOG.info("Rylune Ornithe Gen 2 frame hook active; F8 opens settings in-game.");}}
     private static Path file, csv;
     private static final ScheduledExecutorService worker=Executors.newSingleThreadScheduledExecutor(r->{Thread t=new Thread(r,"Rylune-IO");t.setDaemon(true);return t;});
     private static final Performance.Frames frames=new Performance.Frames();
@@ -20,7 +22,7 @@ public final class RyluneClient implements ClientModInitializer {
         file=FabricLoader.getInstance().getConfigDir().resolve("rylune.properties");
         csv=FabricLoader.getInstance().getGameDir().resolve("rylune-benchmark.csv");
         reload(); ready=true; worker.scheduleWithFixedDelay(RyluneClient::reload,2,2,TimeUnit.SECONDS);
-        LOG.info("Rylune Fabric alpha active; config: "+file);
+        LOG.info("Rylune Fabric Ornithe Gen 2 initialized; awaiting frame hook; config: "+file);
     }
     private static long stamp=Long.MIN_VALUE;
     private static synchronized void reload(){try{long next=Files.exists(file)?Files.getLastModifiedTime(file).toMillis():Long.MIN_VALUE;if(next!=stamp||!Files.exists(file)){config=Config.load(file);stamp=Files.getLastModifiedTime(file).toMillis();}}catch(Exception e){LOG.warning("Config retained: "+e.getMessage());}}

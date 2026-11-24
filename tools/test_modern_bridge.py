@@ -58,8 +58,9 @@ class ModernBridgeTests(unittest.TestCase):
 
     def test_reject_java_mismatch(self):
         p=self.fixture(java=17)
-        self.assertEqual(assess(p)[0]['status'],'REJECTED')
+        self.assertEqual(assess(p,java=8)[0]['status'],'REJECTED')
         self.assertEqual(assess(p,java=17)[0]['status'],'PORTABLE_CANDIDATE')
+        self.assertEqual(assess(p,java=25)[0]['status'],'PORTABLE_CANDIDATE')
 
     def test_reject_mixin_and_dependencies(self):
         p=self.fixture(updates={'mixins':['example.json'],'depends':{'minecraft':'1.21.11','fabric-api':'*'}})
